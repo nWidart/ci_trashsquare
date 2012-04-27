@@ -26,6 +26,7 @@
 				</fieldset>
 				<fieldset>
 					<legend>Votre score!</legend>
+					<p>Vous avez jeté <?php echo $user->user_score; ?> déchets. Vous etes : <span><?php echo $user->user_rank; ?></span></p>
 				</fieldset>
 				<?php echo form_submit('submit', 'Mettre à jour'); ?>
 

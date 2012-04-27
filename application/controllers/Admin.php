@@ -7,6 +7,13 @@ class Admin extends CI_Controller {
 	{
 	   parent::__construct();
 	   session_start();
+
+	   $user = $this->user_model->init_user($_SESSION['login']);
+		// $user->user_nomp = $this->user_model->nom_p($user->nom,$user->prenom);
+		$user->user_nomp = user_nom_p($user->nom,$user->prenom);
+		$user->user_score = $this->user_model->get_user_score($user->id);
+		$user->user_rank = get_user_rank($user->user_score);
+
 	}
 
 	public function index()
@@ -25,7 +32,7 @@ class Admin extends CI_Controller {
 			$res = $this->user_model->verify_user($this->input->post('login'), $this->input->post('password'));
 			if ( $res !== false ) {
 				$_SESSION['login'] = $this->input->post('login');
-				$_SESSION['id'] = $res->login;
+				$_SESSION['user_id'] = $res->id;
 				redirect('Admin/profil');
 			}
 		}
@@ -42,15 +49,19 @@ class Admin extends CI_Controller {
 		if ( !isset($_SESSION['login']) ) {
 			redirect('Admin/index');
 		}
+
+		// Loading and initializing the user
 		$this->load->model('user_model');
-		$user = $this->user_model->init_user($_SESSION['login']);
-		$user_nomp = $this->user_model->nom_p($user->nom,$user->prenom);
+		
+
+		// Get the top 10
+		$top10 = $this->user_model->get_top10();
 
 		$data = array(
 			'main_content' => 'profil_view',
-			'page_title' => 'Profil',
-			'user' => $user,
-			'nom_p' => $user_nomp
+			'page_title'   => 'Profil',
+			'user'         => $user,
+			'top10'        => $top10
 			);
 		$this->load->view('includes/template_logged', $data);
 	}
@@ -60,9 +71,13 @@ class Admin extends CI_Controller {
 		if ( !isset($_SESSION['login']) ) {
 			redirect('Admin/index');
 		}
+
+		// Loading and initializing the user
 		$this->load->model('user_model');
 		$user = $this->user_model->init_user($_SESSION['login']);
-		$user_nomp = $this->user_model->nom_p($user->nom,$user->prenom);
+		$user->user_nomp = $this->user_model->nom_p($user->nom,$user->prenom);
+		$user->user_score = $this->user_model->get_user_score($user->id);
+		$user->user_rank = get_user_rank($user->user_score);
 
 		if ($_POST) {
 			$this->load->library('form_validation');
@@ -77,7 +92,7 @@ class Admin extends CI_Controller {
 				$classe = $this->input->post('classe');
 
 				$user_info = array(
-					'nom' => $nom,
+					'nom'    => $nom,
 					'prenom' => $prenom,
 					'classe' => $classe
 					);
@@ -97,8 +112,7 @@ class Admin extends CI_Controller {
 			'main_content' => 'param_view',
 			'page_title' => 'Paramètres',
 			'user' => $user,
-			'error_msg' => $this->session->flashdata('error_msg'),
-			'nom_p' => $user_nomp
+			'error_msg' => $this->session->flashdata('error_msg')
 			);
 		$this->load->view('includes/template_logged', $data);
 	}

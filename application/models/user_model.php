@@ -2,12 +2,18 @@
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
 * The user class
+*
 */
 class User_model extends CI_Model
 {
+	public $user_score;
+	public $user_nomp;
+	public $user_rank;
+	// private $_CI;
 
 	function __construct()
 	{
+		// $this->_CI = get_instance();
 		parent::__construct();
 	}
 
@@ -36,10 +42,12 @@ class User_model extends CI_Model
 	 * @param  string $login The user login
 	 * @return object        The user object
 	 */
-	public function init_user($login)
+	public function init_user($login="")
 	{
 		$user = $this->db->where('login',$login)->limit(1)->get('user');
 		if ( $user->num_rows > 0 ) {
+			// Getting the user score
+			$this->user_score = $this->get_user_score(1);
 			return $user->row();
 		}
 	}
@@ -52,7 +60,6 @@ class User_model extends CI_Model
 	public function update($user,$user_info)
 	{
 		// updating the user
-
 		$data = array(
 			'id' => $user->id,
 			'nom' => $user_info['nom'],
@@ -68,6 +75,41 @@ class User_model extends CI_Model
 		return false;
 	}
 
+	/**
+	 * Gets the score of a user based on the user id
+	 * @param  string $id="" The user id
+	 * @return array        The user score
+	 */
+	public function get_user_score($id="")
+	{
+		$user_score = $this->db
+							->select('user_id')
+							->from('checkin')
+							->where('user_id', $id)
+							->get();
+		return $user_score->num_rows();
+	}
+
+	public function get_top10()
+	{
+		//
+		// $rank = $this->db->select('nom, prenom, classe')
+		// 	->from('checkin as c')
+		// 	->join('user','user.id = c.user_id','inner')
+		// 	->group_by('user_id')
+		// 	->order_by('count')
+		// 	->get();
+		//return $rank->row();
+		$query = $this->db->query('SELECT nom, prenom,classe, COUNT(user_id) as count FROM checkin AS c INNER JOIN user ON user.id = c.user_id GROUP BY user_id ORDER BY count DESC');
+		return $query->result();
+	}
+
+	/**
+	 * Creation d'un Nom P.
+	 * @param  string $nom    Le nom du user
+	 * @param  string $prenom Le prenom du user
+	 * @return string         La nouvelle variable Nom P.
+	 */
 	public function nom_p($nom,$prenom)
 	{
 		return $nom . " " . substr($prenom,0,1) . ".";

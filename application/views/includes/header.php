@@ -64,8 +64,8 @@
 		<div class="sixcol">
 			<nav class="main-navigation">
 				<ul>
-					<li class="classement"><?php echo anchor('??/home', 'Home'); ?></li>
-					<li class="classement"><?php echo anchor('??/classement', 'Classement'); ?></li>
+					<li class="classement"><?php echo anchor('Site', 'Home'); ?></li>
+					<li class="classement"><?php echo anchor('Site/classement', 'Classement'); ?></li>
 					<li class="profil"><?php echo anchor('Admin/profil', 'Profil'); ?></li>
 				</ul>
 			</nav>
@@ -73,7 +73,7 @@
 		<div class="threecol last">
 			<ul class="connexion">
 				<?php if ( isset($_SESSION['login']) ) { ?>
-					<li>Bienvenue <?php echo anchor('Admin/profil', (isset($nom_p)) ? $nom_p : $user->nom); ?></li>
+					<li>Bienvenue <?php echo anchor('Admin/profil', (isset($user->user_nomp)) ? $user->user_nomp : $user->nom); ?></li>
 					<li><?php echo anchor('Admin/logout', 'Déconnection'); ?></li>
 				<?php } else { ?>
 					<li><?php echo anchor('Admin', 'Login'); ?></li>

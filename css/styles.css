@@ -42,6 +42,7 @@ strong {
 	/* IE6-9 */
 	height: 51px;
 	padding-top: 44px;
+	margin-bottom: 20px;
 	border-bottom: 1px solid #679ca8;
 	-webkit-box-shadow: 0 1px 0 #fff, inset 0 -1px 2px rgba(0,0,0,.2);
 	-moz-box-shadow: 0 1px 0 #fff, inset 0 -1px 2px rgba(0,0,0,.2);
@@ -1008,15 +1009,9 @@ nav select {
 	}
 
 	.row .sixcol {
-		
 		width: 700px;
 	}
 
-	.header {
-		background-color: #689DA8;
-		width: 768px;
-	}
-	
 	li.param, li.logout {
 		width: 730px;
 	}
