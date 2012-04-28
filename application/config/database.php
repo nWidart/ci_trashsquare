@@ -49,15 +49,15 @@ $active_group = 'default';
 $active_record = TRUE;
 
 
-// $db['default']['hostname'] = 'localhost';
-// $db['default']['username'] = 'root';
-// $db['default']['password'] = 'root';
-// $db['default']['database'] = 'trashsquare';
+$db['default']['hostname'] = 'localhost';
+$db['default']['username'] = 'root';
+$db['default']['password'] = 'root';
+$db['default']['database'] = 'trashsquare';
 
-$db['default']['hostname'] = $_SERVER['DB1_HOST'] . ':' . $_SERVER['DB1_PORT'];
-$db['default']['username'] = $_SERVER['DB1_USER'];
-$db['default']['password'] = $_SERVER['DB1_PASS'];
-$db['default']['database'] = $_SERVER['DB1_NAME'];
+// $db['default']['hostname'] = $_SERVER['DB1_HOST'] . ':' . $_SERVER['DB1_PORT'];
+// $db['default']['username'] = $_SERVER['DB1_USER'];
+// $db['default']['password'] = $_SERVER['DB1_PASS'];
+// $db['default']['database'] = $_SERVER['DB1_NAME'];
 
 
 

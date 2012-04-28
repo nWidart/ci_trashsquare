@@ -53,4 +53,6 @@ Le but serait d'avoir un object **$User**, avec des attributs (nom,prénom,class
 ?? Peut-il y avoir des calls à la db depuis une library ?
 Sinon il faut quand même avoir un model ? Si oui, cette library User (ou Users, **à voir niveau conventions**) pourait aussi avoir tout ce qui est du login, logout. Et pourquoi pas aussi intégré le score & rank du user.
 
+?? Utilisation d'ORM. Ca vaut la peine?
+
 [ à suivre …]

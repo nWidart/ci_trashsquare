@@ -15,8 +15,8 @@
 |
 */
 
-// $config['base_url']	= 'http://localhost/ci_testing/';
-$config['base_url'] = 'http://ci-trashsquare.pagodabox.com/';
+$config['base_url']	= 'http://localhost/ci_testing/';
+// $config['base_url'] = 'http://ci-trashsquare.pagodabox.com/';
 
 /*
 |--------------------------------------------------------------------------
