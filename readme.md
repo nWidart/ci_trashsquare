@@ -10,6 +10,7 @@ Gère le login (`index()`), la page profil(`profil()`), la page paramètres (`pa
 Gère la partie home (`index()`) et classement (`classement()`).
 
 **[TODO] Tout mettre dans un seul controller**
+** Soit utiliser les Routes? **
 
 <hr>
 
