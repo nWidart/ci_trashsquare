@@ -1,9 +1,11 @@
 <div class="container">
+	<?php echo $the_user->password; ?>
 	<div class="row">
 		<?php if(isset($user_sidebar)) echo $user_sidebar; ?>
 
 		<div class="sixcol">
 			<h2>Profil</h2>
+			<?php echo $message; ?>
 			<?php if(isset($user_progress)) echo $user_progress; ?>
 			<pre>
 			<?php //var_dump($top10); ?>

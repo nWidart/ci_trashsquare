@@ -1,7 +1,7 @@
 <?php
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Site extends CI_Controller {
+class Site extends Common_Auth_Controller {
 
 	public function __construct()
 	{
@@ -45,6 +45,25 @@ class Site extends CI_Controller {
 			'user'         => $user
 		);
 		$this->load->view('includes/template', $data);
+	}
+
+	public function profil()
+	{
+		$this->data['page_title'] = 'Profil';
+		// Checking if the user is logged in
+		if ($this->ion_auth->logged_in())
+		{
+			// Serving the profile page
+			$this->data['main_content'] = 'profil_view';
+			$this->data['message'] = 'Vous êtes bien loggé.';
+			$this->load->view('includes/template', $this->data);
+		}
+		else
+		{
+			// What the hell are you doing here dude?
+			$this->session->set_flashdata('message', 'You are not allowed to access that page. Please login first.');
+			redirect('auth/login');
+		}
 	}
 }
 

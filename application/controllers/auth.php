@@ -65,11 +65,59 @@ class Auth extends CI_Controller {
 		}
 	}
 
+	/**
+	 * Log out
+	 * @return void
+	 */
 	public function logout()
 	{
 		// logging the user out
 		$logout = $this->ion_auth->logout();
 		redirect('Site/index');
+	}
+
+	public function bash_add_users()
+	{
+
+		// $this->ion_auth->register($username,$password);
+		$i = 0;
+		while ($i <= 10)
+		{
+			$i++;
+			$username = random_string();
+			$password = rand(1000, 9999);
+			$email = 'vide';
+			$additional_data = array(
+			'first_name' => 'vide',
+			'last_name' => 'vide',
+			);
+			if ($this->ion_auth->register($username, $password, $email, $additional_data))
+			{
+				echo "users added <br />";
+			}
+			else
+			{
+				echo 'failed <br />';
+			}
+		}
+	}
+	public function add()
+	{
+		$username = 'ben.edmunds@gmail.com';
+		$password = '12345678';
+		$email = 'benedmunds';
+		$additional_data = array(
+			'first_name' => 'Ben',
+			'last_name' => 'Edmunds',
+			);
+		$group = array('1'); // Sets user to admin. No need for array('1', '2') as user is always set to member by default
+
+		$this->ion_auth->register($username, $password, $email, $additional_data, $group);
+	}
+
+	function random_string( )
+	{
+		echo random_string();
 	}
 
 
