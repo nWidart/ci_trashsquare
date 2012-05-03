@@ -15,7 +15,6 @@ class Auth extends CI_Controller {
 	//redirect if needed, otherwise display the user list
 	function index()
 	{
-		
 		if (!$this->ion_auth->logged_in())
 		{
 			//redirect them to the login page
@@ -37,8 +36,7 @@ class Auth extends CI_Controller {
 			{
 				$this->data['users'][$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
 			}
-	
-			
+
 			$this->load->view('auth/index', $this->data);
 		}
 	}

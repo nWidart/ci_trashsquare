@@ -52,7 +52,7 @@
 	 * 		    
 	 */
 	
-	$config['hash_method'] = 'sha1';		// IMPORTANT: Make sure this is set to either sha1 or bcrypt 
+	$config['hash_method'] = 'bcrypt';		// IMPORTANT: Make sure this is set to either sha1 or bcrypt 
 	
 	/**
 	 * Default rounds used for Bcrypt only 
@@ -77,17 +77,17 @@
 	/**
 	 * Site Title, example.com
 	 */
-	$config['site_title']		   = "Example.com";
+	$config['site_title']		   = "Trashsquare";
 	
 	/**
 	 * Admin Email, admin@example.com
 	 */
-	$config['admin_email']		   = "admin@example.com";
+	$config['admin_email']		   = "n.widart@gmail.com";
 	
 	/**
 	 * Default group, use name
 	 */
-	$config['default_group']       = 'members';
+	$config['default_group']       = 'élèves';
 	
 	/**
 	 * Default administrators group, use name
