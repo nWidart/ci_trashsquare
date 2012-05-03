@@ -35,6 +35,9 @@ class Site extends CI_Controller {
 			$user = $this->user_model->init_user($_SESSION['login']);
 			$user->user_nomp = $this->user_model->nom_p($user->nom,$user->prenom);
 		}
+		// Loading the FirePHP lib
+		$this->load->library('firephp');
+		$this->firephp->log('Log message');
 
 		$data = array(
 			'main_content' => 'rank_view',

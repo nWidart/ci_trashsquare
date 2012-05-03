@@ -7,13 +7,6 @@ class Admin extends CI_Controller {
 	{
 	   parent::__construct();
 	   session_start();
-
-	   $user = $this->user_model->init_user($_SESSION['login']);
-		// $user->user_nomp = $this->user_model->nom_p($user->nom,$user->prenom);
-		$user->user_nomp = user_nom_p($user->nom,$user->prenom);
-		$user->user_score = $this->user_model->get_user_score($user->id);
-		$user->user_rank = get_user_rank($user->user_score);
-
 	}
 
 	public function index()
@@ -52,7 +45,11 @@ class Admin extends CI_Controller {
 
 		// Loading and initializing the user
 		$this->load->model('user_model');
-		
+		$user = $this->user_model->init_user($_SESSION['login']);
+		// $user->user_nomp = $this->user_model->nom_p($user->nom,$user->prenom);
+		$user->user_nomp = user_nom_p($user->nom,$user->prenom);
+		$user->user_score = $this->user_model->get_user_score($user->id);
+		$user->user_rank = get_user_rank($user->user_score);
 
 		// Get the top 10
 		$top10 = $this->user_model->get_top10();
