@@ -37,7 +37,7 @@ class Site extends CI_Controller {
 		}
 		// Loading the FirePHP lib
 		$this->load->library('firephp');
-		$this->firephp->log('Log message');
+		// $this->firephp->log('Log message');
 
 		$data = array(
 			'main_content' => 'rank_view',
