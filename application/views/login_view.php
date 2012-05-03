@@ -2,14 +2,14 @@
 	<div class="row">
 		<h1>Login</h1>
 
-		<?php echo validation_errors(); ?>
-		<?php echo form_open('Admin'); ?>
+		<?php echo $message;?>
+		<?php echo form_open('auth/login'); ?>
 
 		<ul>
-			<li><?php echo form_label('Login', 'login'); ?></li>
-			<li><?php echo form_input('login', set_value('login'), 'id="input_login" placeholder="Entrez votre login..." autofocus'); ?></li>
+			<li><?php echo form_label('Email/Username:', 'identity'); ?></li>
+			<li><?php echo form_input($identity); ?></li>
 			<li><?php echo form_label('Password', 'password'); ?></li>
-			<li><?php echo form_password('password', '', 'id="input_password" placeholder="et mot de passe."'); ?></li>
+			<li><?php echo form_password($password); ?></li>
 		</ul>
 		<p>
 			<?php echo form_submit('submit', 'Login'); ?>

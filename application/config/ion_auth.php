@@ -87,7 +87,7 @@
 	/**
 	 * Default group, use name
 	 */
-	$config['default_group']       = 'élèves';
+	$config['default_group']       = 'eleves';
 	
 	/**
 	 * Default administrators group, use name
