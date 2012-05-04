@@ -57,3 +57,5 @@ Sinon il faut quand même avoir un model ? Si oui, cette library User (ou Users,
 ?? Utilisation d'ORM. Ca vaut la peine?
 
 [ à suivre …]
+
+Un gros controller Vs. **plusieurs controllers** = http://stackoverflow.com/a/10150332/1117716
