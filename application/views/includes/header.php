@@ -59,7 +59,7 @@
 <div class="container header">
 	<div class="row">
 		<div class="threecol">
-			<h1><a href="index.php" title="Index">Trashsquare</a></h1>
+			<h1><a href="<?php echo base_url(); ?>" title="Index">Trashsquare</a></h1>
 		</div>
 		<div class="sixcol">
 			<nav class="main-navigation">
@@ -76,7 +76,7 @@
 					<li>Bienvenue <?php echo anchor('Site/profil', user_nom_p($the_user->last_name,$the_user->first_name) ); ?></li>
 					<li><?php echo anchor('auth/logout', 'Déconnection'); ?></li>
 				<?php } else { ?>
-					<li><?php echo anchor('Admin', 'Login'); ?></li>
+					<li><?php echo anchor('auth/login', 'Login'); ?></li>
 				<?php } ?>
 			</ul>
 		</div>

@@ -1,6 +1,7 @@
 <div class="container">
 	<div class="row">
-		<div class="threecol"></div>
+		<?php echo (isset($user_sidebar)) ? $user_sidebar : '<div class="threecol"></div>'; ?>
+
 		<div class="sixcol last">
 			<h2>Classement général</h2>
 			<div class="scores">
@@ -22,12 +23,6 @@
 						<td><?php echo $row->count; ?></td>
 						<td><?php echo $row->classe; ?></td>
 
-						<?php if ($n == $the_user->id) : ?>
-						<td>
-							<a href="https://twitter.com/share" class="twitter-share-button" data-text="I scored <?php echo $user_score; ?> on trashsquare! I'm <?php echo get_user_rank($user_score); ?>!" data-via="trashsquare" data-hashtags="trashsquare">Tweet</a>
-							<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-						</td>
-					<?php endif; ?>
 						<?php $n++; ?>
 					</tr>
 				<?php } ?>
@@ -35,5 +30,6 @@
 
 			</div><!-- end #scores -->
 		</div>
+		<?php echo (isset($badges_sidebar)) ? $badges_sidebar : '<div class="threecol"></div>'; ?>
 	</div>
 </div>

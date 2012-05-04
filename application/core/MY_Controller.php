@@ -64,7 +64,7 @@ class Common_Auth_Controller extends CI_Controller {
 			$this->load->vars($data);
 		}
 		else {
-			redirect('auth/login');
+			redirect('Guest/'. $this->uri->segment(2) );
 		}
 	}
 }

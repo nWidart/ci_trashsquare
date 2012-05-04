@@ -23,7 +23,7 @@ class Site extends Common_Auth_Controller {
 		$this->load->model('rank_model');
 		$this->data['global_rank'] = $this->rank_model->get_all();
 
-		$this->load->view('includes/template', $this->data);
+		$this->load->view('includes/template_logged', $this->data);
 	}
 
 	public function profil()
