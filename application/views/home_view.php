@@ -14,7 +14,7 @@
 		</div>
 		<div class="twocol last sidebar">
 			<h3>Nous suivre ...</h3>
-			<a href="team.php">Découvre notre équipe!</a>
+			<?php echo anchor('Site/team', 'Découvre notre équipe!'); ?>
 			<ul>
 				<li><a href="https://twitter.com/#!/Trashsquare" class="twitter" title="Suivre Trashsquare sur Twitter"></a></li>
 				<li><a href="https://www.facebook.com/Trashsquare" class="facebook" title="Suivre Trashsquare sur Facebook"></a></li>

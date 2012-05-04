@@ -24,6 +24,12 @@ class Guest extends CI_Controller {
 	{
 		redirect('auth/login');
 	}
+	public function team()
+	{
+		$this->data['page_title'] = 'Notre équipe';
+		$this->data['main_content'] = 'team_view';
+		$this->load->view('includes/template', $this->data);
+	}
 }
 
 /* End of file Guest.php */

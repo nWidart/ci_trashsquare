@@ -107,8 +107,13 @@ class Site extends Common_Auth_Controller {
 			$this->data['main_content'] = 'param_view';
 			$this->load->view('includes/template_logged', $this->data);
 		}
+	}
 
-
+	public function team()
+	{
+		$this->data['page_title'] = 'Notre équipe';
+		$this->data['main_content'] = 'team_view';
+		$this->load->view('includes/template', $this->data);
 	}
 
 	public function heajClasse($str)
