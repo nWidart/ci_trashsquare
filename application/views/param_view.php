@@ -23,13 +23,13 @@
 				<fieldset>
 					<legend>Champs fixes</legend>
 					<?php echo form_label('Login: ', 'username'); ?>
-					<?php //echo form_input($username);?>
+					<?php echo form_input($username);?>
 					<?php echo form_label('Mot de passe: ', 'password'); ?>
 					<?php //echo form_input('password', $user->password, 'id="password" alt="Mot de passe" disabled');?>
 				</fieldset>
 				<fieldset>
 					<legend>Votre score!</legend>
-					<p>Vous avez jeté <?php echo $user_score; ?> déchets. Vous etes : <span><?php //echo $user->user_rank; ?></span></p>
+					<p>Vous avez jeté <?php echo $user_score; ?> déchets. Vous etes : <span><?php echo get_user_rank($user_score); ?> </span>!</p>
 				</fieldset>
 				<?php echo form_submit('submit', 'Mettre à jour'); ?>
 

@@ -75,13 +75,20 @@ class Site extends Common_Auth_Controller {
 		// Run the form & set the values
 		if ($this->form_validation->run() == true)
 		{
-			//
+			$id = $this->the_user->id;
+			$data = array(
+				'first_name' => $this->input->post('first_name'),
+				'last_name' => $this->input->post('last_name'),
+				'classe' => $this->input->post('classe'),
+			);
 		}
 
 		// updating the user
-		if ($this->form_validation->run() == true && $this->ion_auth->register($username, $password, $email, $additional_data))
+		if ($this->form_validation->run() == true && $this->ion_auth->update($id, $data))
 		{
 			//
+			$this->session->set_flashdata('message', "Profile updated!");
+			redirect('Site/param');
 		}
 		else
 		{
@@ -103,6 +110,12 @@ class Site extends Common_Auth_Controller {
 				'id' => 'classe',
 				'type' => 'text',
 				'value' => ($this->form_validation->set_value('classe')) ? $this->load->view('includes/template_logged', $this->data) : $this->the_user->classe,
+			);
+			$this->data['username'] = array(
+				'name' => 'username',
+				'id' => 'username',
+				'type' => 'text',
+				'value' => ($this->form_validation->set_value('username')) ? $this->load->view('includes/template_logged', $this->data) : $this->the_user->username,
 			);
 			$this->data['main_content'] = 'param_view';
 			$this->load->view('includes/template_logged', $this->data);
