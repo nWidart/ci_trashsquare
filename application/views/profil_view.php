@@ -10,12 +10,12 @@
 			<?php //var_dump($top10); ?>
 			</pre>
 			<div class="scores">
-          		<table>
-          			<tr>
+				<table>
+					<tr>
 						<th><img src="<?php echo base_url(); ?>images/icn_trash.png" alt="Trash" /></th>
 						<th><img src="<?php echo base_url(); ?>images/icn_badge.png" alt="Badge" /></th>
 						<th><img src="<?php echo base_url(); ?>images/icn_stat.png" alt="Stat" /></th>
-          			</tr>
+					</tr>
 				<?php $n = 1; ?>
 				<?php foreach ($top10 as $row) { ?>
 					<tr>
@@ -37,10 +37,10 @@
 						<?php $n++; ?>
 					</tr>
 				<?php } ?>
-          		</table>
-          		<?php echo anchor('Site/classement', '<img src="'. base_url() . 'images/blue-arrow.png" alt="Locaux" />Voir le classement complet'); ?>
+				</table>
+				<?php echo anchor('Site/classement', '<img src="'. base_url() . 'images/blue-arrow.png" alt="Locaux" />Voir le classement complet'); ?>
 
-          	</div><!-- end #scores -->
+			</div><!-- end #scores -->
 		</div>
 		<?php if(isset($badges_sidebar)) echo $badges_sidebar; ?>
 	</div>
