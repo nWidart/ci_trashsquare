@@ -6,42 +6,24 @@ class Site extends Common_Auth_Controller {
 	public function __construct()
 	{
 	   parent::__construct();
-	   session_start();
 	}
 	public function index()
 	{
-		// Loading the user
-		if ( isset($_SESSION['login']) ) {
-			$this->load->model('user_model');
-			$user = $this->user_model->init_user($_SESSION['login']);
-			$user->user_nomp = $this->user_model->nom_p($user->nom,$user->prenom);
-		}
-		else {
-			$user = null;
-		}
-		// Loading the home page
-		$data = array(
-			'main_content' => 'home_view',
-			'page_title'   => 'Home',
-			'user'         => $user
-		);
-		$this->load->view('includes/template', $data);
+		$this->data['page_title'] = 'Index';
+		$this->data['main_content'] = 'home_view';
+
+		$this->load->view('includes/template', $this->data);
 	}
 
 	public function classement()
 	{
-		if ( isset($_SESSION['login']) ) {
-			$this->load->model('user_model');
-			$user = $this->user_model->init_user($_SESSION['login']);
-			$user->user_nomp = $this->user_model->nom_p($user->nom,$user->prenom);
-		}
+		$this->data['page_title'] = 'Classement';
+		$this->data['main_content'] = 'rank_view';
+		// Getting the global ranking
+		$this->load->model('rank_model');
+		$this->data['global_rank'] = $this->rank_model->get_all();
 
-		$data = array(
-			'main_content' => 'rank_view',
-			'page_title'   => 'Classement',
-			'user'         => $user
-		);
-		$this->load->view('includes/template', $data);
+		$this->load->view('includes/template', $this->data);
 	}
 
 	public function profil()
@@ -52,7 +34,11 @@ class Site extends Common_Auth_Controller {
 		{
 			// Serving the profile page
 			$this->data['main_content'] = 'profil_view';
-			$this->data['message'] = 'Vous êtes bien loggé.';
+			// Getting the top10
+			$this->load->model('rank_model');
+			$this->data['top10'] = $this->rank_model->get_top10();
+			//$this->data['message'] = 'Vous êtes bien loggé.';
+			$this->data['message'] ='';
 			$this->load->view('includes/template_logged', $this->data);
 		}
 		else

@@ -58,9 +58,7 @@ class Common_Auth_Controller extends CI_Controller {
 			// Loading the user var
 			$data->the_user = $this->ion_auth->user()->row();
 			$this->the_user = $data->the_user;
-			// Getting the top10
 			$this->load->model('user_model');
-			$this->data['top10'] = $this->user_model->get_top10();
 			// Getting the user score
 			$this->data['user_score'] = $this->user_model->get_user_score($data->the_user->id);
 			$this->load->vars($data);
