@@ -68,9 +68,9 @@ class Site extends Common_Auth_Controller {
 		$this->data['page_title'] = "Paramètres";
 		$this->load->library('form_validation');
 		// Validate the input
-		$this->form_validation->set_rules('first_name', 'Prénom', 'xss_clean');
-		$this->form_validation->set_rules('last_name', 'Nom', 'xss_clean');
-		$this->form_validation->set_rules('classe', 'Classe', 'xss_clean');
+		$this->form_validation->set_rules('first_name', 'Prénom', 'xss_clean|trim');
+		$this->form_validation->set_rules('last_name', 'Nom', 'xss_clean|trim');
+		$this->form_validation->set_rules('classe', 'Classe', 'xss_clean|trim');
 
 		// Run the form & set the values
 		if ($this->form_validation->run() == true)
@@ -78,8 +78,8 @@ class Site extends Common_Auth_Controller {
 			$id = $this->the_user->id;
 			$data = array(
 				'first_name' => $this->input->post('first_name'),
-				'last_name' => $this->input->post('last_name'),
-				'classe' => $this->input->post('classe'),
+				'last_name'  => $this->input->post('last_name'),
+				'classe'     => $this->input->post('classe'),
 			);
 		}
 
@@ -94,34 +94,49 @@ class Site extends Common_Auth_Controller {
 		{
 			$this->data['message'] =(validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
 			$this->data['first_name'] = array(
-				'name' => 'first_name',
-				'id' => 'first_name',
-				'type' => 'text',
+				'name'  => 'first_name',
+				'id'    => 'first_name',
+				'type'  => 'text',
 				'value' => ($this->form_validation->set_value('first_name')) ? $this->load->view('includes/template_logged', $this->data) : $this->the_user->first_name,
 			);
 			$this->data['last_name'] = array(
-				'name' => 'last_name',
-				'id' => 'last_name',
-				'type' => 'text',
+				'name'  => 'last_name',
+				'id'    => 'last_name',
+				'type'  => 'text',
 				'value' => ($this->form_validation->set_value('last_name')) ? $this->load->view('includes/template_logged', $this->data) : $this->the_user->last_name,
 			);
 			$this->data['classe'] = array(
-				'name' => 'classe',
-				'id' => 'classe',
-				'type' => 'text',
+				'name'  => 'classe',
+				'id'    => 'classe',
+				'type'  => 'text',
 				'value' => ($this->form_validation->set_value('classe')) ? $this->load->view('includes/template_logged', $this->data) : $this->the_user->classe,
 			);
 			$this->data['username'] = array(
-				'name' => 'username',
-				'id' => 'username',
-				'type' => 'text',
+				'name'  => 'username',
+				'id'    => 'username',
+				'type'  => 'text',
 				'value' => ($this->form_validation->set_value('username')) ? $this->load->view('includes/template_logged', $this->data) : $this->the_user->username,
+				'disabled' => 'disabled',
 			);
 			$this->data['main_content'] = 'param_view';
 			$this->load->view('includes/template_logged', $this->data);
 		}
 
 
+	}
+
+	public function heajClasse($str)
+	{
+		$result = preg_match('/[1-3][A-Z]{3}[1-5]/', $str);
+		if ($result)
+		{
+			return true;
+		}
+		else
+		{
+			$this->form_validation->set_message('heajClasse', 'La classe n\'est pas au bon format.');
+			return false;
+		}
 	}
 }
 
