@@ -2,6 +2,12 @@
 
 if ( ! function_exists('user_nom_p'))
 {
+	/**
+	 * Creates "Nom P."
+	 * @param  string $nom    Le nom
+	 * @param  string $prenom Le prénom
+	 * @return string         Nouveau format "Nom P."
+	 */
 	function user_nom_p($nom,$prenom)
 	{
 		return $nom . " " . substr($prenom,0,1) . ".";
@@ -10,6 +16,11 @@ if ( ! function_exists('user_nom_p'))
 
 if ( ! function_exists('get_user_rank'))
 {
+	/**
+	 * Get the user rank
+	 * @param  string $score User score
+	 * @return string        User rank
+	 */
 	function get_user_rank($score)
 	{
 		switch ($score) {
@@ -86,6 +97,10 @@ if ( ! function_exists('get_user_rank'))
 
 if ( ! function_exists('random_string'))
 {
+	/**
+	 * Generate a random string
+	 * @return string The random string
+	 */
 	function random_string()
 	{
 		$character_set_array[] = array( 'count' => 2, 'characters' => 'abcdefghijklmnopqrstuvwxyz' );

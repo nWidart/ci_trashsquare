@@ -76,6 +76,11 @@ class Auth extends CI_Controller {
 		redirect('Site/index');
 	}
 
+	/**
+	 * Bash add users
+	 * Adds x users
+	 * @return void
+	 */
 	public function bash_add_users()
 	{
 
