@@ -35,9 +35,6 @@ class Site extends Common_Auth_Controller {
 			$user = $this->user_model->init_user($_SESSION['login']);
 			$user->user_nomp = $this->user_model->nom_p($user->nom,$user->prenom);
 		}
-		// Loading the FirePHP lib
-		$this->load->library('firephp');
-		// $this->firephp->log('Log message');
 
 		$data = array(
 			'main_content' => 'rank_view',
@@ -56,7 +53,7 @@ class Site extends Common_Auth_Controller {
 			// Serving the profile page
 			$this->data['main_content'] = 'profil_view';
 			$this->data['message'] = 'Vous êtes bien loggé.';
-			$this->load->view('includes/template', $this->data);
+			$this->load->view('includes/template_logged', $this->data);
 		}
 		else
 		{
@@ -64,6 +61,14 @@ class Site extends Common_Auth_Controller {
 			$this->session->set_flashdata('message', 'You are not allowed to access that page. Please login first.');
 			redirect('auth/login');
 		}
+	}
+
+	public function param()
+	{
+		$this->data['page_title'] = "Paramètres";
+		$this->data['main_content'] = 'param_view';
+		$this->load->view('includes/template_logged', $this->data);
+
 	}
 }
 

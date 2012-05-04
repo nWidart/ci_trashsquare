@@ -83,8 +83,6 @@ class Auth extends CI_Controller {
 	 */
 	public function bash_add_users()
 	{
-
-		// $this->ion_auth->register($username,$password);
 		$i = 0;
 		while ($i <= 10)
 		{

@@ -90,17 +90,13 @@ class User_model extends CI_Model
 		return $user_score->num_rows();
 	}
 
+	/**
+	 * Get the top 10
+	 * @return array An array of objects (user objects)
+	 */
 	public function get_top10()
 	{
-		//
-		// $rank = $this->db->select('nom, prenom, classe')
-		// 	->from('checkin as c')
-		// 	->join('user','user.id = c.user_id','inner')
-		// 	->group_by('user_id')
-		// 	->order_by('count')
-		// 	->get();
-		//return $rank->row();
-		$query = $this->db->query('SELECT nom, prenom,classe, COUNT(user_id) as count FROM checkin AS c INNER JOIN user ON user.id = c.user_id GROUP BY user_id ORDER BY count DESC');
+		$query = $this->db->query('SELECT first_name,last_name,classe, COUNT(user_id) as count FROM checkin AS c INNER JOIN users ON users.id = c.user_id GROUP BY user_id ORDER BY count DESC');
 		return $query->result();
 	}
 

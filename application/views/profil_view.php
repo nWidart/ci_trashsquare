@@ -1,5 +1,4 @@
 <div class="container">
-	<?php echo $the_user->password; ?>
 	<div class="row">
 		<?php if(isset($user_sidebar)) echo $user_sidebar; ?>
 
@@ -21,15 +20,15 @@
 				<?php foreach ($top10 as $row) { ?>
 					<tr>
 						<td><?php echo $n; ?></td>
-						<?php if ( $row->nom == "" || $row->prenom == "")  {  ?>
+						<?php if ( $row->last_name == "" || $row->first_name == "")  {  ?>
 							<td>N/A</td>
 						<?php } else { ?>
-							<td><?php echo $row->nom . " " . substr($row->prenom,0,1) . "." ; ?></td>
+							<td><?php echo $row->last_name . " " . substr($row->first_name,0,1) . "." ; ?></td>
 						<?php } ?>
 						<td><?php echo $row->count; ?></td>
 						<td><?php echo $row->classe; ?></td>
 
-						<?php if ($n == $user->id) : ?>
+						<?php if ($n == $the_user->id) : ?>
 						<td>
 							<a href="https://twitter.com/share" class="twitter-share-button" data-text="I scored <?php echo $user->user_score; ?> on trashsquare! I'm <?php echo $user->user_rank; ?>!" data-via="trashsquare" data-hashtags="trashsquare">Tweet</a>
 							<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>

@@ -66,15 +66,15 @@
 				<ul>
 					<li class="classement"><?php echo anchor('Site', 'Home'); ?></li>
 					<li class="classement"><?php echo anchor('Site/classement', 'Classement'); ?></li>
-					<li class="profil"><?php echo anchor('Admin/profil', 'Profil'); ?></li>
+					<li class="profil"><?php echo anchor('Site/profil', 'Profil'); ?></li>
 				</ul>
 			</nav>
 		</div>
 		<div class="threecol last">
 			<ul class="connexion">
-				<?php if ( isset($_SESSION['login']) ) { ?>
-					<li>Bienvenue <?php echo anchor('Admin/profil', (isset($user->user_nomp)) ? $user->user_nomp : $user->nom); ?></li>
-					<li><?php echo anchor('Admin/logout', 'Déconnection'); ?></li>
+				<?php if ( $this->ion_auth->logged_in() ) { ?>
+					<li>Bienvenue <?php echo anchor('Site/profil', user_nom_p($the_user->last_name,$the_user->first_name) ); ?></li>
+					<li><?php echo anchor('auth/logout', 'Déconnection'); ?></li>
 				<?php } else { ?>
 					<li><?php echo anchor('Admin', 'Login'); ?></li>
 				<?php } ?>
