@@ -67,6 +67,9 @@
 					<li class="classement"><?php echo anchor('Site', 'Home'); ?></li>
 					<li class="classement"><?php echo anchor('Site/classement', 'Classement'); ?></li>
 					<li class="profil"><?php echo anchor('Site/profil', 'Profil'); ?></li>
+					<?php if ( $this->ion_auth->is_admin() ) : ?>
+					<li class="admin"><?php echo anchor('Su', 'Admin'); ?></li>
+					<?php endif; ?>
 				</ul>
 			</nav>
 		</div>

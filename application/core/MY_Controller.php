@@ -11,12 +11,12 @@ class Admin_Controller extends CI_Controller {
 
 		//Check if user is in admin group
 		if ( $this->ion_auth->is_admin() ) {
+			$data->good = "good";
 
 			//Put User in Class-wide variable
 			$data->the_user = $this->ion_auth->user()->row();
-
 			//Store user in $data
-			$data->the_user = $this->the_user;
+			$this->the_user = $data->the_user;
 
 			//Load $the_user in all views
 			$this->load->vars($data);
