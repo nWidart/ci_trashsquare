@@ -107,7 +107,8 @@ class Su extends Admin_Controller {
 				'last_name' => $last_name,
 				'classe' => $classe,
 			);
-			$group = array('2');
+			$group_id = $this->input->post('group');
+			$group = array("$group_id");
 			if ( $this->ion_auth->register($username, $password, $email, $additional_data,$group) )
 			{
 				$this->session->set_flashdata('message', "Utilisateur ajouté avec succes.<br /> Mot de passe: " . $password . "<br /> Login: " . $username);
@@ -147,6 +148,9 @@ class Su extends Admin_Controller {
 				'type' => 'text',
 				'value' => $this->form_validation->set_value('email'),
 			);
+			$this->load->model('user_model');
+			$this->data['options'] = $this->user_model->get_groups();
+
 			$this->load->view('includes/template', $this->data);
 		}
 	}

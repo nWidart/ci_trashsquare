@@ -34,4 +34,17 @@ class User_model extends CI_Model
 		return $user->id;
 	}
 
+	/**
+	 * Get the groups
+	 * @return array array('id','group_name')
+	 */
+	public function get_groups()
+	{
+		$query_str = "SELECT * FROM groups";
+		$groups_array = $this->db->query($query_str)->result_array();
+		foreach ($groups_array as $key => $value) {
+			$groups[$value['id']] = $value['name'];
+		}
+		return $groups;
+	}
 }

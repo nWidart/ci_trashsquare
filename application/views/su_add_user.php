@@ -13,6 +13,9 @@
 
 			<?php echo form_label('Email: ', 'email'); ?>
 			<?php echo form_input($email);?>
+
+			<?php echo form_label('Groupe: ', 'group'); ?>
+			<?php echo form_dropdown('group', $options, 2); ?>
 		</fieldset>
 			<?php echo form_submit('submit', 'Envoyer'); ?>
 
