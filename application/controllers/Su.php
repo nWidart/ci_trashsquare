@@ -20,21 +20,48 @@ class SU extends Admin_Controller {
 	{
 		$this->data['page_title'] = 'Checkin';
 		$this->data['main_content'] = 'su_checkin_view';
+
+		// Getting the names and converting the object to an array
 		$this->load->model('poubelle_model');
-		$poubelles = $this->poubelle_model->get_all();
-		$this->data['options'] = array();
-		foreach ($poubelles as $poubelle => $value) {
-			$this->data['options'] .= array($poubelle => $value);
+		$poubelles = object_to_array( $this->poubelle_model->get_all() );
+
+		// Creating the options for the dropdown
+		foreach ($poubelles as $key => $value) {
+			// $this->firephp->log($value['nom']);
+			$options[$value['id']] = $value['nom'];
 		}
+		$this->data['options'] = $options;
 
-		// $this->firephp->log($this->data['options']);
+		// Setting form_validation
+		$this->form_validation->set_rules('username', 'Utilisateur', 'trim|required|min_length[4]|xss_clean');
 
+		// If the form runs
 		if ($this->form_validation->run() == true)
 		{
-			// do something
+			// Setting variables
+			$username = $this->input->post('username', true);
+			$poubelle_id = $this->input->post('poubelle', true);
+
+			// Getting the user_id from the username
+			$this->load->model('user_model');
+			$user_id = $this->user_model->get_user_id($username);
+
+			// Add a row to the checkins table.
+			$this->load->model('checkin_model');
+			if ( $this->checkin_model->add($user_id,$poubelle_id) )
+			{
+				$this->session->set_flashdata('message', "Checkin prit en compte!");
+				redirect('SU/checkin');
+			}
+			else
+			{
+				$this->session->set_flashdata('message', "Il y a eu une erreur");
+				redirect('SU/checkin');
+			}
 		}
 		else
 		{
+			$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
 			$this->data['username'] = array(
 				'name'  => 'username',
 				'id'    => 'username',
@@ -45,7 +72,6 @@ class SU extends Admin_Controller {
 				'name'  => 'password',
 				'id'    => 'password',
 				'type'  => 'text',
-				'value' => $this->form_validation->set_value('password'),
 			);
 			$this->load->view('includes/template', $this->data);
 		}

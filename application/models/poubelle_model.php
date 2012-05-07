@@ -7,6 +7,10 @@ class Poubelle_model extends CI_Model{
 		parent::__construct();
 	}
 
+	/**
+	 * Get all the "poubelles" -names
+	 * @return object All the "poubelles"
+	 */
 	public function get_all()
 	{
 		$query = $this->db->query("SELECT * FROM poubelle");

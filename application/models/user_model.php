@@ -26,4 +26,11 @@ class User_model extends CI_Model
 							->get();
 		return $user_score->num_rows();
 	}
+
+	public function get_user_id($username)
+	{
+		$query_str = "SELECT * FROM users WHERE username = ?";
+		$user = $this->db->query($query_str, $username)->row();
+		return $user->id;
+	}
 }
