@@ -33,4 +33,5 @@ class User_model extends CI_Model
 		$user = $this->db->query($query_str, $username)->row();
 		return $user->id;
 	}
+
 }
