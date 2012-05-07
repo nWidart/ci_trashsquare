@@ -83,10 +83,10 @@ class Su extends Admin_Controller {
 		$this->data['main_content'] = 'su_add_user';
 
 		// Form validations
-		$this->form_validation->set_rules('prenom', 'prenom', 'trim|required|min_length[3]|xss_clean');
-		$this->form_validation->set_rules('nom', 'nom', 'trim|required|min_length[3]|xss_clean');
-		$this->form_validation->set_rules('classe', 'classe', 'trim|required|min_length[5]|xss_clean');
-		$this->form_validation->set_rules('email', 'email', 'trim|required|valid_email|xss_clean');
+		$this->form_validation->set_rules('prenom', 'prenom', 'trim|min_length[3]|xss_clean');
+		$this->form_validation->set_rules('nom', 'nom', 'trim|min_length[3]|xss_clean');
+		$this->form_validation->set_rules('classe', 'classe', 'trim|min_length[5]|xss_clean');
+		$this->form_validation->set_rules('email', 'email', 'trim|valid_email|xss_clean');
 
 		// if the form runs
 		if ($this->form_validation->run() == true)
@@ -155,13 +155,114 @@ class Su extends Admin_Controller {
 		}
 	}
 
-	public function user_list()
+	/**
+	 * Displays a user list
+	 * and can edit a user profile if a ID is specified in the 3rd url segment
+	 * @param  string $id=NULL ID from url segment
+	 * @return void
+	 */
+	public function user_list($id=NULL)
 	{
 		$this->data['page_title'] = 'List utilisateur';
-		$this->data['main_content'] = 'su_user_list';
+		$this->data['main_content'] = 'su_user_list_view';
 
+		$this->load->model('user_model');
+		$this->data['users'] = $this->user_model->get_all();
+
+		// hiding the Edit user form by default
+		$this->data['edit_user_form'] = FALSE;
+
+		if ($id != NULL)
+		{
+			// Selection the user
+			$user = $this->ion_auth->user($id)->row();
+
+			// Form validations
+			$this->form_validation->set_rules('prenom', 'prenom', 'trim|min_length[3]|xss_clean');
+			$this->form_validation->set_rules('nom', 'nom', 'trim|min_length[3]|xss_clean');
+			$this->form_validation->set_rules('classe', 'classe', 'trim|min_length[5]|xss_clean');
+			$this->form_validation->set_rules('email', 'email', 'trim|valid_email|xss_clean');
+
+			if ( $this->form_validation->run() == true )
+			{
+				// setting variables
+				$first_name = $this->input->post('prenom');
+				$last_name = $this->input->post('nom');
+				$classe = $this->input->post('classe');
+				$email = $this->input->post('email');
+				$update_data = array(
+					'first_name' => $first_name,
+					'last_name' => $last_name,
+					'classe' => $classe,
+					'email' => $email,
+				);
+
+				if ( $this->ion_auth->update($id, $update_data) )
+				{
+					$this->session->set_flashdata('message', "Utilisateur mit à jour.");
+					redirect('Su/user_list');
+				}
+				else
+				{
+					$this->session->set_flashdata('message', "Problème lors de la mise à jour. Essayez à nouveau.");
+					redirect('Su/user_list');
+				}
+
+				//$this->session->set_flashdata('message', "form run.");
+			}
+			else
+			{
+				$this->data['edit_user_form'] = TRUE;
+				$this->data['first_name'] = array(
+					'name' => 'prenom',
+					'id' => 'prenom',
+					'type' => 'text',
+					'value' => ($this->form_validation->set_value('prenom')) ? $this->form_validation->set_value('prenom') : $user->first_name,
+				);
+				$this->data['last_name'] = array(
+					'name' => 'nom',
+					'id' => 'nom',
+					'type' => 'text',
+					'value' => ($this->form_validation->set_value('nom')) ? $this->form_validation->set_value('nom') : $user->last_name,
+				);
+				$this->data['classe'] = array(
+					'name' => 'classe',
+					'id' => 'classe',
+					'type' => 'text',
+					'value' => ($this->form_validation->set_value('classe')) ? $this->form_validation->set_value('classe') : $user->classe,
+				);
+				$this->data['email'] = array(
+					'name' => 'email',
+					'id' => 'email',
+					'type' => 'text',
+					'value' => ($this->form_validation->set_value('email')) ? $this->form_validation->set_value('email') : $user->email,
+				);
+				$this->load->model('user_model');
+				$this->data['options'] = $this->user_model->get_groups();
+				$this->data['user_group'] = $this->user_model->get_user_group($id);
+			}
+
+		}
+
+
+
+		$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
 		$this->load->view('includes/template', $this->data);
 	}
+
+	public function delete_user($id)
+	{
+		if ( $this->ion_auth->delete_user($id) )
+		{
+			$this->session->set_flashdata('message', "Utilisateur: <strong>$id</strong> correctement suprimer.");
+		}
+		else
+		{
+			$this->session->set_flashdata('message', "Problème lors de suppression. Essayez à nouveau.");
+		}
+		redirect('Su/user_list');
+	}
+
 
 }
 

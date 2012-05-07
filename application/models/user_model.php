@@ -47,4 +47,39 @@ class User_model extends CI_Model
 		}
 		return $groups;
 	}
+
+	/**
+	 * Get all users
+	 * @return array of objects
+	 */
+	public function get_all()
+	{
+		$query_str = "SELECT * FROM users";
+		$users_data = $this->db->query($query_str)->result();
+
+		return $users_data;
+	}
+
+	/**
+	 * Get the group of a user based from his ID
+	 * @param  string $id user id
+	 * @return string     group id
+	 */
+	public function get_user_group($id)
+	{
+		$query_str = "SELECT * FROM users_groups AS g ";
+		$query_str .= "INNER JOIN users ON users.id = g.user_id ";
+		$query_str .= "INNER JOIN groups ON groups.id = g.group_id ";
+		$query_str .= "WHERE user_id = ?";
+		$result = $this->db->query($query_str, $id)->row();
+
+		if (isset($result->group_id))
+		{
+			return $result->group_id;
+		}
+		else
+		{
+			return 2;
+		}
+	}
 }
