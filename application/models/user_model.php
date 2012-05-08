@@ -49,12 +49,12 @@ class User_model extends CI_Model
 	}
 
 	/**
-	 * Get all users
+	 * Get all users with pagination
 	 * @return array of objects
 	 */
-	public function get_all()
+	public function get_all($offset)
 	{
-		$query_str = "SELECT * FROM users";
+		$query_str = "SELECT * FROM users LIMIT 5 OFFSET $offset";
 		$users_data = $this->db->query($query_str)->result();
 
 		return $users_data;

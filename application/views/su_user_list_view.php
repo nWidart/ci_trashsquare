@@ -19,12 +19,23 @@
 					<td><?php echo $user->classe; ?></td>
 					<td><?php echo $user->username; ?></td>
 					<td>
-						<?php echo anchor('Su/user_list/' . $user->id, 'Edit', 'attributs'); ?>
+						<?php
+							if ( $this->uri->segment(3) == '')
+							{
+								$offset_segment = 0;
+							}
+							else
+							{
+								$offset_segment = $this->uri->segment(3);
+							}
+						?>
+						<?php echo anchor('Su/user_list/' . $offset_segment . '/' . $user->id, 'Edit', 'attributs'); ?>
 						<?php echo anchor('Su/delete_user/' . $user->id, 'x', 'id="del"'); ?>
 					</td>
 				</tr>
 				<?php endforeach; ?>
 			</table>
+			<?php echo $pagination; ?>
 		</div>
 		<div class="fourcol last">
 			<p>

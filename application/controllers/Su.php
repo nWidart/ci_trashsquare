@@ -161,13 +161,13 @@ class Su extends Admin_Controller {
 	 * @param  string $id=NULL ID from url segment
 	 * @return void
 	 */
-	public function user_list($id=NULL)
+	public function user_list($offset=0, $id=NULL)
 	{
 		$this->data['page_title'] = 'List utilisateur';
 		$this->data['main_content'] = 'su_user_list_view';
 
 		$this->load->model('user_model');
-		$this->data['users'] = $this->user_model->get_all();
+		$this->data['users'] = $this->user_model->get_all($offset);
 
 		// hiding the Edit user form by default
 		$this->data['edit_user_form'] = FALSE;
@@ -244,7 +244,17 @@ class Su extends Admin_Controller {
 
 		}
 
+		$this->load->library('pagination');
 
+		$config['base_url'] = 'http://localhost/ci_testing/index.php/Su/user_list';
+		$config['total_rows'] = $this->db->count_all('users');
+		$config['per_page'] = 5;
+		$config['prev_link'] = 'Prev';
+		$config['next_link'] = 'Next';
+
+		$this->pagination->initialize($config);
+
+		$this->data['pagination'] = $this->pagination->create_links();
 
 		$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
 		$this->load->view('includes/template', $this->data);
