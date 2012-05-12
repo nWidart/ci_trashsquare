@@ -42,7 +42,7 @@
 				<?php echo ( isset($message) ) ? $message : ''; ?>
 			</p>
 			<?php if ($edit_user_form) : ?>
-				<?php echo form_open('Su/user_list/' . $this->uri->segment(3)); ?>
+				<?php echo form_open('Su/user_list/'. $offset_segment . '/' . $this->uri->segment(3)); ?>
 				<fieldset>
 					<?php echo form_label('Prénom', 'prenom'); ?>
 					<?php echo form_input($first_name); ?>

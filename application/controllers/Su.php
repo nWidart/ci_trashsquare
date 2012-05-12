@@ -33,7 +33,7 @@ class Su extends Admin_Controller {
 		$this->data['options'] = $options;
 
 		// Setting form_validation
-		$this->form_validation->set_rules('username', 'Utilisateur', 'trim|required|min_length[4]|xss_clean');
+		$this->form_validation->set_rules('username', 'Utilisateur', 'trim|required|min_length[4]|xss_clean|callback_is_username');
 
 		// If the form runs
 		if ($this->form_validation->run() == true)
@@ -41,6 +41,12 @@ class Su extends Admin_Controller {
 			// Setting variables
 			$username = $this->input->post('username', true);
 			$poubelle_id = $this->input->post('poubelle', true);
+			// checking if the user exists
+			if ( !$this->ion_auth->username_check($username) )
+			{
+				$this->session->set_flashdata('message', "Ce compte n'existe pas.");
+				redirect('SU/checkin');
+			}
 
 			// Getting the user_id from the username
 			$this->load->model('user_model');
@@ -155,6 +161,7 @@ class Su extends Admin_Controller {
 		}
 	}
 
+	private $us_id;
 	/**
 	 * Displays a user list
 	 * and can edit a user profile if a ID is specified in the 3rd url segment
@@ -171,9 +178,11 @@ class Su extends Admin_Controller {
 
 		// hiding the Edit user form by default
 		$this->data['edit_user_form'] = FALSE;
+		$this->us_id = $id;
 
 		if ($id != NULL)
 		{
+			$this->firephp->log($this->us_id);
 			// Selection the user
 			$user = $this->ion_auth->user($id)->row();
 
@@ -196,8 +205,7 @@ class Su extends Admin_Controller {
 					'classe' => $classe,
 					'email' => $email,
 				);
-
-				if ( $this->ion_auth->update($id, $update_data) )
+				if ( $this->ion_auth->update($this->us_id, $update_data) )
 				{
 					$this->session->set_flashdata('message', "Utilisateur mit à jour.");
 					redirect('Su/user_list');
@@ -271,6 +279,60 @@ class Su extends Admin_Controller {
 			$this->session->set_flashdata('message', "Problème lors de suppression. Essayez à nouveau.");
 		}
 		redirect('Su/user_list');
+	}
+	/**
+	 * Username check
+	 *
+	 * @return bool
+	 * @author Ben Edmunds
+	 **/
+	public function username_check($username)
+	{
+		if ($this->ion_auth->username_check($username))
+		{
+			$this->form_validation->set_message('username_check', 'The username "'.$username.'" already exists.');
+			return FALSE;
+		}
+		else
+		{
+			return TRUE;
+		}
+	}
+
+	/**
+	 * Email check
+	 *
+	 * @return bool
+	 * @author Ben Edmunds
+	 **/
+	public function email_check($email)
+	{
+		if ($this->ion_auth->email_check($email))
+		{
+			$this->form_validation->set_message('email_check', 'The email "'.$email.'" already exists.');
+			return FALSE;
+		}
+		else
+		{
+			return TRUE;
+		}
+	}
+	/**
+	 * Username check exists
+	 *
+	 * @return bool
+	 **/
+	public function is_username($username)
+	{
+		if ($this->ion_auth->username_check($username))
+		{
+			return TRUE;
+		}
+		else
+		{
+			$this->form_validation->set_message('is_username', 'The username "'.$username.'" doesn\'t exists.');
+			return TRUE;
+		}
 	}
 
 
